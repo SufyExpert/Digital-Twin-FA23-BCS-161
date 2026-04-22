@@ -90,7 +90,15 @@ def chat():
 
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "developer": "Sufyan", "reg": "FA23-BCS-161"})
+    return jsonify({
+        "status": "ok",
+        "developer": "Sufyan",
+        "reg": "FA23-BCS-161",
+        "role": "Cloud & DevOps Engineer",
+        "skills": ["React", "Python", "Docker", "Kubernetes", "Azure"],
+        "github": "https://github.com/SufyExpert",
+        "version": "1.0.0"
+    })
 
 
 if __name__ == "__main__":
