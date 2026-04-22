@@ -1,0 +1,18 @@
+# Phase 6 Troubleshooting — Case 1: Wrong Port Mapping
+# targetPort intentionally set to 9999 (wrong) to demonstrate failure
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    app: frontend
+    project: fa23-bcs-161
+    troubleshoot: wrong-port
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9999   # ← WRONG — nginx listens on 80, not 9999

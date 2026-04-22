@@ -1,0 +1,18 @@
+# Phase 6 Troubleshooting — Case 2: Service Not Accessible
+# type intentionally changed to ClusterIP — no external IP will be provisioned
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    app: frontend
+    project: fa23-bcs-161
+    troubleshoot: clusterip-no-external
+spec:
+  type: ClusterIP   # ← WRONG — should be LoadBalancer for public access
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: fa23-bcs-161-backend
+    image: sufyexpert/fa23-bcs-161-backend
+    ports:
+      - "5000:5000"
+    networks:
+      - portfolio-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_BACKEND_URL: ""
+    container_name: fa23-bcs-161-frontend
+    image: sufyexpert/fa23-bcs-161-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - portfolio-net
+    restart: unless-stopped
+
+networks:
+  portfolio-net:
+    driver: bridge
