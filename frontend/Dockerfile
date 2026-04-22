@@ -18,7 +18,7 @@ FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 # SPA fallback: all routes → index.html
-RUN printf 'server {\n  listen 80;\n  location / {\n    root /usr/share/nginx/html;\n    try_files $uri /index.html;\n  }\n}\n' \
+RUN printf 'server {\n  listen 80;\n  location / {\n    root /usr/share/nginx/html;\n    try_files $uri /index.html;\n  }\n  location /api/ {\n    proxy_pass http://backend-service:5000/api/;\n  }\n}\n' \
     > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
