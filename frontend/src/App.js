@@ -151,7 +151,7 @@ function ChatView({ onDashboard }) {
           <HeroIcon />
         </div>
         <div className="hero-title">
-          Hey. I'm Sufyan's <span>Digital Twink.</span>
+          Hey. I'm Sufyan's <span>Digital Twin.</span>
         </div>
         <div className="hero-sub">
           FA23-BCS-161 · Cloud & DevOps Engineer · Ask me anything about his work.
