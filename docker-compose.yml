@@ -4,7 +4,7 @@ services:
   database:
     build: ./db
     container_name: fa23-bcs-161-database
-    image: sufyexpert/fa23-bcs-161-database:latest
+    image: sufyexpert/fa23-bcs-161-database:FA23-BCS-161
     ports:
       - "5432:5432"
     environment:
@@ -23,7 +23,7 @@ services:
   backend:
     build: ./backend
     container_name: fa23-bcs-161-backend
-    image: sufyexpert/fa23-bcs-161-backend:latest
+    image: sufyexpert/fa23-bcs-161-backend:FA23-BCS-161
     ports:
       - "5000:5000"
     environment:
@@ -47,7 +47,7 @@ services:
       args:
         REACT_APP_BACKEND_URL: ""
     container_name: fa23-bcs-161-frontend
-    image: sufyexpert/fa23-bcs-161-frontend:latest
+    image: sufyexpert/fa23-bcs-161-frontend:FA23-BCS-161
     ports:
       - "3000:80"
     depends_on:
