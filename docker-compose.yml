@@ -11,8 +11,6 @@ services:
       - POSTGRES_DB=digital_twin_db
       - POSTGRES_USER=sufy_dev
       - POSTGRES_PASSWORD=devops_pass
-    volumes:
-      - db-data:/var/lib/postgresql/data
     networks:
       portfolio-net:
         aliases:
@@ -59,7 +57,3 @@ services:
 networks:
   portfolio-net:
     driver: bridge
-
-volumes:
-  db-data:
-    driver: local
