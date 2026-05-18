@@ -63,7 +63,7 @@ FALLBACK_PROJECTS = [
         "link": "https://promptutor.app",
         "github_link": "https://github.com/SufyExpert/prompt-tutor-ai",
         "technologies": "['Next.js', 'AI Studio', 'Supabase', 'Tailwind CSS', 'Vercel']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/prompt-tutor-ai.png",
         "category": "SaaS Web App"
     },
     {
@@ -75,7 +75,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/health-level-prediction-system",
         "technologies": "['Python', 'Flask', 'Scikit-Learn', 'Matplotlib', 'Random Forest']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/health-risk.png",
         "category": "Web App"
     },
     {
@@ -87,7 +87,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/medical-diagnostic-system-ver2",
         "technologies": "['Next.js', 'React', 'Node.js', 'Python ML', 'Express', 'Microservices']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v2.png",
         "category": "Web App"
     },
     {
@@ -99,7 +99,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/ask_academy",
         "technologies": "['Python', 'React', 'PostgreSQL', 'Vector DB', 'LLM', 'RAG']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/ask-academy.png",
         "category": "Web App"
     },
     {
@@ -111,7 +111,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/vibee-centralized-social-media",
         "technologies": "['Flutter', 'Dart', 'WebSockets', 'NoSQL', 'Firebase', 'Real-time']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/vibee.png",
         "category": "Mobile App"
     },
     {
@@ -123,7 +123,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/medical-diagnostic-system",
         "technologies": "['Python', 'Bayesian Network', 'Neo4j', 'FastAPI', 'Scikit-Learn']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v1.png",
         "category": "Desktop App"
     },
     {
@@ -135,7 +135,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/socialapp",
         "technologies": "['MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Bcrypt']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/socialapp.png",
         "category": "Web App"
     },
     {
@@ -147,7 +147,7 @@ FALLBACK_PROJECTS = [
         "link": "",
         "github_link": "https://github.com/SufyExpert/Flappy-Bird-Game",
         "technologies": "['Java', 'AWT', 'Swing', 'OOP', 'Game Loop', 'Physics']",
-        "thumbnail": "/profile-image.webp",
+        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/flappy-bird.png",
         "category": "Game"
     }
 ]
