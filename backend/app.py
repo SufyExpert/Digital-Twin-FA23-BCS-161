@@ -109,12 +109,12 @@ def about():
     if db_svc:
         for item in db_svc:
             icon = "StarIcon"
-            if "ai" in item["slug"]:
-                icon = "StarIcon"
-            elif "full-stack" in item["slug"]:
+            if "full-stack" in item["slug"]:
                 icon = "CloudIcon"
             elif "database" in item["slug"]:
                 icon = "DockerIcon"
+            elif "ai" in item["slug"]:
+                icon = "StarIcon"
             services.append({
                 "title": item["title"],
                 "description": item["description"],
@@ -169,12 +169,12 @@ def get_services():
     services = []
     for item in db_svc:
         icon = "StarIcon"
-        if "ai" in item["slug"]:
-            icon = "StarIcon"
-        elif "full-stack" in item["slug"]:
+        if "full-stack" in item["slug"]:
             icon = "CloudIcon"
         elif "database" in item["slug"]:
             icon = "DockerIcon"
+        elif "ai" in item["slug"]:
+            icon = "StarIcon"
         services.append({
             "title": item["title"],
             "description": item["description"],
