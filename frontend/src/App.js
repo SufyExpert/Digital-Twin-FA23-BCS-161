@@ -11,6 +11,22 @@ const parseTech = (techStr) => {
   } catch { return []; }
 };
 
+const renderBullets = (descStr) => {
+  try {
+    if (!descStr) return null;
+    const str = descStr.trim();
+    if (str.startsWith('[')) {
+      const arr = JSON.parse(str.replace(/'/g, '"'));
+      return (
+        <ul className="about-bullets">
+          {arr.map((bullet, idx) => <li key={idx}>{bullet}</li>)}
+        </ul>
+      );
+    }
+  } catch {}
+  return descStr;
+};
+
 /* ── SVG Icons ──────────────────────────────────── */
 const SendIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="15" height="15">
@@ -446,7 +462,7 @@ function AboutView({ onBack }) {
                   <div className="exp-role">{exp.role}</div>
                   <div className="exp-company">{exp.company}</div>
                   <div className="exp-duration">{exp.duration}</div>
-                  <div className="exp-desc">{exp.description}</div>
+                  <div className="exp-desc">{renderBullets(exp.description)}</div>
                 </div>
               </div>
             ))}
