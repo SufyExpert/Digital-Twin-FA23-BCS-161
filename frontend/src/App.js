@@ -335,7 +335,7 @@ function DashboardView({ onNavigate }) {
         {!load && err && <div className="center-msg">Could not load projects. Check backend connection.</div>}
         {!load && !err && projects.length === 0 && <div className="center-msg">No projects found in database.</div>}
         {!load && !err && projects.map((p, i) => (
-          <div key={p.id} className="project-card" onClick={() => onNavigate('project', p.slug)}
+          <div key={p.id} className="project-card" onClick={() => onNavigate('project', `projectcard${i + 1}`)}
             style={{ cursor: 'pointer', animationDelay: `${i * 0.06}s` }}>
             <div className="project-img-wrapper">
               <img
@@ -370,7 +370,7 @@ function DashboardView({ onNavigate }) {
                   Launch →
                 </a>
               )}
-              <button className="proj-btn detail-btn" onClick={e => { e.stopPropagation(); onNavigate('project', p.slug); }}>
+              <button className="proj-btn detail-btn" onClick={e => { e.stopPropagation(); onNavigate('project', `projectcard${i + 1}`); }}>
                 Details
               </button>
             </div>
@@ -475,28 +475,72 @@ function AboutView({ onBack }) {
 
 /* ── Root ───────────────────────────────────────── */
 export default function App() {
-  const [view, setView] = useState('chat');       // 'chat' | 'dashboard' | 'about' | 'project'
-  const [projectSlug, setProjectSlug] = useState(null);
-
-  const onNavigate = (target, slug) => {
-    if (target === 'project') { setProjectSlug(slug); }
-    setView(target);
+  const getInitialState = () => {
+    const path = window.location.pathname.toLowerCase().trim();
+    if (path.startsWith('/projectcard')) {
+      const slug = path.replace('/', '');
+      return { view: 'project', slug };
+    }
+    if (path === '/about' || path === '/about/') {
+      return { view: 'about', slug: null };
+    }
+    if (path === '/dashboard' || path === '/dashboard/') {
+      return { view: 'dashboard', slug: null };
+    }
+    return { view: 'chat', slug: null };
   };
+
+  const initialState = getInitialState();
+  const [view, setView] = useState(initialState.view);
+  const [projectSlug, setProjectSlug] = useState(initialState.slug);
+
+  const navigateTo = (target, slug) => {
+    setView(target);
+    setProjectSlug(slug || null);
+
+    let path = '/';
+    if (target === 'about') path = '/about';
+    else if (target === 'dashboard') path = '/dashboard';
+    else if (target === 'project' && slug) path = `/${slug}`;
+
+    window.history.pushState({ view: target, slug }, '', path);
+  };
+
+  useEffect(() => {
+    const handlePopState = (e) => {
+      const path = window.location.pathname.toLowerCase().trim();
+      if (path.startsWith('/projectcard')) {
+        setView('project');
+        setProjectSlug(path.replace('/', ''));
+      } else if (path === '/about' || path === '/about/') {
+        setView('about');
+        setProjectSlug(null);
+      } else if (path === '/dashboard' || path === '/dashboard/') {
+        setView('dashboard');
+        setProjectSlug(null);
+      } else {
+        setView('chat');
+        setProjectSlug(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const renderView = () => {
     switch (view) {
-      case 'chat':      return <ChatView onNavigate={onNavigate} />;
-      case 'dashboard': return <DashboardView onNavigate={onNavigate} />;
-      case 'about':     return <AboutView onBack={() => setView('dashboard')} />;
-      case 'project':   return <ProjectDetailView slug={projectSlug} onBack={() => setView('dashboard')} />;
-      default:          return <ChatView onNavigate={onNavigate} />;
+      case 'chat':      return <ChatView onNavigate={navigateTo} />;
+      case 'dashboard': return <DashboardView onNavigate={navigateTo} />;
+      case 'about':     return <AboutView onBack={() => navigateTo('dashboard')} />;
+      case 'project':   return <ProjectDetailView slug={projectSlug} onBack={() => navigateTo('dashboard')} />;
+      default:          return <ChatView onNavigate={navigateTo} />;
     }
   };
 
   return (
     <div className="app-shell">
       <header className="header">
-        <div className="header-logo" onClick={() => setView('chat')} style={{ cursor: 'pointer' }}>
+        <div className="header-logo" onClick={() => navigateTo('chat')} style={{ cursor: 'pointer' }}>
           <div className="logo-badge">DT</div>
           <div>
             <div className="logo-name">Digital Twin Portfolio</div>
@@ -505,13 +549,13 @@ export default function App() {
         </div>
         <nav className="header-nav">
           <div className="live-pill"><span className="live-dot" /> AI Online</div>
-          <button id="nav-chat-btn" className={`nav-btn ${view === 'chat' ? 'active' : ''}`} onClick={() => setView('chat')}>
+          <button id="nav-chat-btn" className={`nav-btn ${view === 'chat' ? 'active' : ''}`} onClick={() => navigateTo('chat')}>
             <ChatIcon /> Chat
           </button>
-          <button id="nav-dash-btn" className={`nav-btn ${view === 'dashboard' || view === 'project' ? 'active' : ''}`} onClick={() => setView('dashboard')}>
+          <button id="nav-dash-btn" className={`nav-btn ${view === 'dashboard' || view === 'project' ? 'active' : ''}`} onClick={() => navigateTo('dashboard')}>
             <DashIcon /> Dashboard
           </button>
-          <button id="nav-about-btn" className={`nav-btn ${view === 'about' ? 'active' : ''}`} onClick={() => setView('about')}>
+          <button id="nav-about-btn" className={`nav-btn ${view === 'about' ? 'active' : ''}`} onClick={() => navigateTo('about')}>
             <PersonIcon /> About
           </button>
         </nav>
