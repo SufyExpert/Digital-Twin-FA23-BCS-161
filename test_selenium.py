@@ -9,7 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Configure Chrome Options
 chrome_options = Options()
-chrome_options.add_argument("--headless=new")  # Run in headless mode for CI/CD compatibility
+if os.environ.get("CI") == "true":
+    chrome_options.add_argument("--headless=new")  # Headless mode for CI/CD compatibility
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--window-size=1920,1080")
@@ -32,7 +33,7 @@ def driver():
     print("\nTearing down Selenium driver...")
     driver.quit()
 
-TARGET_URL = "http://localhost:3000"
+TARGET_URL = "http://20.255.118.236"
 
 def test_homepage_loaded(driver):
     """Test Case 1: Verify Homepage Loads Successfully"""
@@ -97,7 +98,7 @@ def test_api_database_connected(driver):
     except Exception as e:
         # Fallback direct API endpoint check
         print("Dashboard check failed, performing direct Flask DB API check...")
-        driver.get("http://localhost:5000/api/db-status")
+        driver.get(f"{TARGET_URL}/api/db-status")
         time.sleep(1)
         api_content = driver.find_element(By.TAG_NAME, "pre").text
         print(f"Direct API Response: {api_content}")

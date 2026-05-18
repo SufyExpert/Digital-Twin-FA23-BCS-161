@@ -9,36 +9,51 @@ DROP TABLE IF EXISTS services CASCADE;
 
 -- Create tables
 CREATE TABLE experience (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
+    title VARCHAR(255),
     company VARCHAR(255),
-    role VARCHAR(255),
-    duration VARCHAR(100),
-    description TEXT,
+    date_range VARCHAR(100),
+    employment_type VARCHAR(100),
+    bullets TEXT,
+    status VARCHAR(50),
+    order_index INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE projects (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) UNIQUE,
+    id VARCHAR(255) PRIMARY KEY,
+    title VARCHAR(255),
+    slug VARCHAR(255) UNIQUE,
     description TEXT,
-    html_url VARCHAR(512),
-    stargazers_count INTEGER DEFAULT 0,
+    cover_image_url VARCHAR(512),
+    link VARCHAR(512),
+    github_link VARCHAR(512),
+    technologies TEXT,
+    tools TEXT,
+    case_study_content TEXT,
+    status VARCHAR(50),
+    is_featured BOOLEAN,
+    order_index INTEGER,
+    category VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE project_images (
-    id SERIAL PRIMARY KEY,
-    project_id INTEGER REFERENCES projects(id) ON DELETE CASCADE,
-    image_url TEXT,
-    caption VARCHAR(255),
+    id VARCHAR(255) PRIMARY KEY,
+    project_id VARCHAR(255) REFERENCES projects(id) ON DELETE CASCADE,
+    url VARCHAR(512),
+    order_index INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE services (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     title VARCHAR(255),
+    slug VARCHAR(255) UNIQUE,
+    tagline VARCHAR(255),
     description TEXT,
-    icon VARCHAR(100),
+    features TEXT,
+    order_index INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
