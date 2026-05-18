@@ -1,14 +1,44 @@
 version: '3.9'
 
 services:
+  database:
+    build: ./db
+    container_name: fa23-bcs-161-database
+    image: sufyexpert/fa23-bcs-161-database:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=digital_twin_db
+      - POSTGRES_USER=sufy_dev
+      - POSTGRES_PASSWORD=devops_pass
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      portfolio-net:
+        aliases:
+          - database
+          - database-service
+    restart: unless-stopped
+
   backend:
     build: ./backend
     container_name: fa23-bcs-161-backend
-    image: sufyexpert/fa23-bcs-161-backend
+    image: sufyexpert/fa23-bcs-161-backend:latest
     ports:
       - "5000:5000"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_NAME=digital_twin_db
+      - DB_USER=sufy_dev
+      - DB_PASSWORD=devops_pass
+    depends_on:
+      - database
     networks:
-      - portfolio-net
+      portfolio-net:
+        aliases:
+          - backend
+          - backend-service
     restart: unless-stopped
 
   frontend:
@@ -17,7 +47,7 @@ services:
       args:
         REACT_APP_BACKEND_URL: ""
     container_name: fa23-bcs-161-frontend
-    image: sufyexpert/fa23-bcs-161-frontend
+    image: sufyexpert/fa23-bcs-161-frontend:latest
     ports:
       - "3000:80"
     depends_on:
@@ -29,3 +59,7 @@ services:
 networks:
   portfolio-net:
     driver: bridge
+
+volumes:
+  db-data:
+    driver: local

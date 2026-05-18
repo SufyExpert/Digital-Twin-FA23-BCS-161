@@ -162,19 +162,76 @@ def create_report():
 
     content.append(PageBreak())
 
+    # --- Part 5: CI/CD Automation ---
+    content.append(Paragraph("Part 5: CI/CD Pipeline Automation (GitHub Actions)", header_style))
+    content.append(Paragraph(
+        "A complete, professional CI/CD pipeline was developed using GitHub Actions. "
+        "The workflow triggers automatically on push or pull request to the master/main branches. "
+        "It consists of three automated stages: 1) Build and lint backend/frontend dependencies, "
+        "2) Build and push multi-tier Docker images to Docker Hub, and 3) Automate Kubernetes deployment rollouts.",
+        normal_style
+    ))
+    content.append(Spacer(1, 10))
+    
+    # 5.1 Pipeline Stages description
+    content.append(Paragraph("5.1 Multi-Stage Pipeline Stages", sub_header_style))
+    pipeline_code = """
+1. Build & Test: Sets up Python 3.9 and Node.js 18, installs dependencies, lints Flask backend, and runs React build verification.
+2. Docker Build & Push: Builds optimized Docker images for Frontend, Backend, and pre-seeded Database, pushing them with git-sha tags to Docker Hub.
+3. Deploy to AKS: Configures Kubeconfig context and applies YAML manifests (postgres, backend, frontend, ingress) with rolling updates.
+"""
+    content.append(Paragraph(pipeline_code.replace("\n", "<br/>"), code_style))
+    content.append(Spacer(1, 15))
+
+    content.append(PageBreak())
+
+    # --- Part 6: Selenium Testing ---
+    content.append(Paragraph("Part 6: Selenium Automated Testing Suite", header_style))
+    content.append(Paragraph(
+        "To satisfy rigorous QA requirements, a complete, headless Selenium automated test suite was developed. "
+        "The suite executes 3 primary DevOps verification test cases, validating user experience and 3-tier database connectivity.",
+        normal_style
+    ))
+    
+    # 6.1 Homepage Loaded
+    content.append(Paragraph("6.1 Test Case 1: Verification of Homepage Load", sub_header_style))
+    img_path = os.path.join(SCREENSHOTS_DIR, "selenium_01_homepage_loaded.png")
+    if os.path.exists(img_path):
+        img = Image(img_path, width=5*inch, height=3*inch)
+        content.append(img)
+        
+    # 6.2 Chatbot behavior
+    content.append(Paragraph("6.2 Test Case 2: Validation of Chatbot Submission & response", sub_header_style))
+    img_path = os.path.join(SCREENSHOTS_DIR, "selenium_02_chat_behavior.png")
+    if os.path.exists(img_path):
+        img = Image(img_path, width=5*inch, height=3*inch)
+        content.append(img)
+
+    content.append(PageBreak())
+
+    # 6.3 DB Connectivity Check
+    content.append(Paragraph("6.3 Test Case 3: 3-Tier Database Connection Verification", sub_header_style))
+    content.append(Paragraph("Verifies live backend connectivity to the seeded PostgreSQL database.", normal_style))
+    img_path = os.path.join(SCREENSHOTS_DIR, "selenium_04_api_db_connected.png")
+    if os.path.exists(img_path):
+        img = Image(img_path, width=5*inch, height=2.5*inch)
+        content.append(img)
+    
+    content.append(Spacer(1, 15))
+
     # --- Architecture ---
     content.append(Paragraph("Azure Service Architecture Summary", header_style))
     arch_text = """
-    The application follows a cloud-native microservices architecture:
-    1. <b>Frontend:</b> React application served by Nginx, containerized and exposed via Kubernetes LoadBalancer.
-    2. <b>Backend:</b> Flask API handling logic and data fetching, exposed internally via ClusterIP.
-    3. <b>Orchestration:</b> Managed by Azure Kubernetes Service (AKS) / Docker Desktop K8s.
-    4. <b>Networking:</b> Nginx acts as a reverse proxy to route /api traffic to the backend service.
+    The application follows a cloud-native 3-tier microservices architecture:
+    1. <b>Frontend:</b> React SPA served by Nginx, containerized and exposed via Kubernetes Ingress (HTTPS).
+    2. <b>Backend:</b> Flask REST API handling AI chatbot logic, repository fetching, and DB queries, exposed internally via ClusterIP.
+    3. <b>Database:</b> PostgreSQL 15 database container loaded with pre-seeded data dynamically synced from Supabase via python script, exposed internally on port 5432.
+    4. <b>Orchestration & DevOps:</b> Deployed on Azure Kubernetes Service (AKS) with horizontal pod scaling, automated using GitHub Actions and verified by Selenium.
     """
     content.append(Paragraph(arch_text, normal_style))
     
     # Final confirmation
-    content.append(Spacer(1, 1*inch))
+    content.append(Spacer(1, 0.5*inch))
     content.append(Paragraph("End of Report", ParagraphStyle('Center', parent=styles['Normal'], alignment=1, fontSize=14, textColor=colors.grey)))
 
     doc.build(content)

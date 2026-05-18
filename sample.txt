@@ -1,0 +1,139 @@
+commit 75c85420305eaaf3cd8d459b3abd88e1443d5acc (HEAD -> master, origin/master)
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:43:16 2026 +0500
+
+    fix(docker): correct nginx upstream backend service name
+
+commit 98c26daaede76d537dbe740528fcad11682463ed
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:40:40 2026 +0500
+
+    devops: added Dockerfiles and optimizations
+
+commit 37c6794893f106229ff6d02c4bb4ac9ff015807c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 10:36:47 2026 +0500
+
+    docs: add final exam report PDF
+
+commit c8519b81c4e7cae76809a5e2dc8a53a3c8ca1595
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:31:10 2026 +0500
+
+    test change
+
+:...skipping...
+commit 75c85420305eaaf3cd8d459b3abd88e1443d5acc (HEAD -> master, origin/master)
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:43:16 2026 +0500
+
+    fix(docker): correct nginx upstream backend service name
+
+commit 98c26daaede76d537dbe740528fcad11682463ed
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:40:40 2026 +0500
+
+    devops: added Dockerfiles and optimizations
+
+commit 37c6794893f106229ff6d02c4bb4ac9ff015807c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 10:36:47 2026 +0500
+
+    docs: add final exam report PDF
+
+commit c8519b81c4e7cae76809a5e2dc8a53a3c8ca1595
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:31:10 2026 +0500
+
+    test change
+
+commit d8caf27b93a509913a50413eb014d63bf650720d
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:02:03 2026 +0500
+
+    test change
+
+commit ac6d9529ac9fc6e5ec5be30b61e9a2dbea25a57c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 10:59:02 2026 +0500
+
+commit 75c85420305eaaf3cd8d459b3abd88e1443d5acc (HEAD -> master, origin/master)
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:43:16 2026 +0500
+
+    fix(docker): correct nginx upstream backend service name
+
+commit 98c26daaede76d537dbe740528fcad11682463ed
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:40:40 2026 +0500
+
+    devops: added Dockerfiles and optimizations
+
+commit 37c6794893f106229ff6d02c4bb4ac9ff015807c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 10:36:47 2026 +0500
+
+    docs: add final exam report PDF
+
+commit c8519b81c4e7cae76809a5e2dc8a53a3c8ca1595
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:31:10 2026 +0500
+
+    test change
+
+commit d8caf27b93a509913a50413eb014d63bf650720d
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:02:03 2026 +0500
+
+    test change
+
+commit ac6d9529ac9fc6e5ec5be30b61e9a2dbea25a57c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 10:59:02 2026 +0500
+
+    test change
+
+commit d3f9177ffcab33c1c03901cbbd596f2798a5d9b4
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+:...skipping...
+commit 75c85420305eaaf3cd8d459b3abd88e1443d5acc (HEAD -> master, origin/master)
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:43:16 2026 +0500
+
+    fix(docker): correct nginx upstream backend service name
+
+commit 98c26daaede76d537dbe740528fcad11682463ed
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 12:40:40 2026 +0500
+
+    devops: added Dockerfiles and optimizations
+
+commit 37c6794893f106229ff6d02c4bb4ac9ff015807c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Sun May 3 10:36:47 2026 +0500
+
+    docs: add final exam report PDF
+
+commit c8519b81c4e7cae76809a5e2dc8a53a3c8ca1595
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:31:10 2026 +0500
+
+    test change
+
+commit d8caf27b93a509913a50413eb014d63bf650720d
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 11:02:03 2026 +0500
+
+    test change
+
+commit ac6d9529ac9fc6e5ec5be30b61e9a2dbea25a57c
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 10:59:02 2026 +0500
+
+    test change
+
+commit d3f9177ffcab33c1c03901cbbd596f2798a5d9b4
+Author: Sufyan Ahmad <sufyexpert@gmail.com>
+Date:   Thu Apr 23 10:55:44 2026 +0500
+
+    test change

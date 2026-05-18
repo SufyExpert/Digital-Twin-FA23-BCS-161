@@ -24,6 +24,16 @@ spec:
           env:
             - name: FLASK_ENV
               value: production
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: digital_twin_db
+            - name: DB_USER
+              value: sufy_dev
+            - name: DB_PASSWORD
+              value: devops_pass
           resources:
             requests:
               memory: "128Mi"
