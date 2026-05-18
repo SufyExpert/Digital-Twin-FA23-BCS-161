@@ -59,11 +59,11 @@ FALLBACK_PROJECTS = [
         "title": "Prompt Tutor AI",
         "slug": "prompt-tutor-ai",
         "description": "An AI-powered web application that helps users write, analyze, improve, and compare prompts.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/prompt-tutor-ai.png",
+        "cover_image_url": "/project-images/prompt-tutor-ai.png",
         "link": "https://promptutor.app",
         "github_link": "https://github.com/SufyExpert/prompt-tutor-ai",
         "technologies": "['Next.js', 'AI Studio', 'Supabase', 'Tailwind CSS', 'Vercel']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/prompt-tutor-ai.png",
+        "thumbnail": "/project-images/prompt-tutor-ai.png",
         "category": "SaaS Web App"
     },
     {
@@ -71,11 +71,11 @@ FALLBACK_PROJECTS = [
         "title": "Health Level Prediction System",
         "slug": "health-predictor",
         "description": "Stateless diagnostic machine-learning system predicting health risks tier using Random Forest.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/health-risk.png",
+        "cover_image_url": "/project-images/health-risk.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/health-level-prediction-system",
         "technologies": "['Python', 'Flask', 'Scikit-Learn', 'Matplotlib', 'Random Forest']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/health-risk.png",
+        "thumbnail": "/project-images/health-risk.png",
         "category": "Web App"
     },
     {
@@ -83,11 +83,11 @@ FALLBACK_PROJECTS = [
         "title": "Medical Diagnostic System V2",
         "slug": "medical-diagnostic-v2",
         "description": "SaaS clinical symptom checker using dual ML engines (Random Forest + Bayesian) and Neo4j graph.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v2.png",
+        "cover_image_url": "/project-images/meddiag-v2.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/medical-diagnostic-system-ver2",
         "technologies": "['Next.js', 'React', 'Node.js', 'Python ML', 'Express', 'Microservices']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v2.png",
+        "thumbnail": "/project-images/meddiag-v2.png",
         "category": "Web App"
     },
     {
@@ -95,11 +95,11 @@ FALLBACK_PROJECTS = [
         "title": "ASK Academy ERP",
         "slug": "ask-academy",
         "description": "Enterprise-grade native school management application powered by Microsoft Azure SQL backend.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/ask-academy.png",
+        "cover_image_url": "/project-images/ask-academy.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/ask_academy",
         "technologies": "['Python', 'React', 'PostgreSQL', 'Vector DB', 'LLM', 'RAG']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/ask-academy.png",
+        "thumbnail": "/project-images/ask-academy.png",
         "category": "Web App"
     },
     {
@@ -107,11 +107,11 @@ FALLBACK_PROJECTS = [
         "title": "Vibee Social Aggregator",
         "slug": "vibee",
         "description": "Cross-platform Flutter app centralizing YouTube, Reddit, and News with timed-session digital well-being features.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/vibee.png",
+        "cover_image_url": "/project-images/vibee.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/vibee-centralized-social-media",
         "technologies": "['Flutter', 'Dart', 'WebSockets', 'NoSQL', 'Firebase', 'Real-time']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/vibee.png",
+        "thumbnail": "/project-images/vibee.png",
         "category": "Mobile App"
     },
     {
@@ -119,11 +119,11 @@ FALLBACK_PROJECTS = [
         "title": "Medical Diagnostic System V1",
         "slug": "medical-diagnostic-v1",
         "description": "Standalone offline-first Bayesian probability desktop triage application utilizing Neo4j cloud graph.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v1.png",
+        "cover_image_url": "/project-images/meddiag-v1.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/medical-diagnostic-system",
         "technologies": "['Python', 'Bayesian Network', 'Neo4j', 'FastAPI', 'Scikit-Learn']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v1.png",
+        "thumbnail": "/project-images/meddiag-v1.png",
         "category": "Desktop App"
     },
     {
@@ -131,11 +131,11 @@ FALLBACK_PROJECTS = [
         "title": "SocialApp Community Web",
         "slug": "social-app",
         "description": "Full-stack web community hub with array friend relations and Base64 media database serialization.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/socialapp.png",
+        "cover_image_url": "/project-images/socialapp.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/socialapp",
         "technologies": "['MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Bcrypt']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/socialapp.png",
+        "thumbnail": "/project-images/socialapp.png",
         "category": "Web App"
     },
     {
@@ -143,11 +143,11 @@ FALLBACK_PROJECTS = [
         "title": "Flappy Bird Engine",
         "slug": "flappy-bird",
         "description": "Desktop Java game demonstrating custom multi-threaded game loops and raw collision math.",
-        "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/flappy-bird.png",
+        "cover_image_url": "/project-images/flappy-bird.png",
         "link": "",
         "github_link": "https://github.com/SufyExpert/Flappy-Bird-Game",
         "technologies": "['Java', 'AWT', 'Swing', 'OOP', 'Game Loop', 'Physics']",
-        "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/flappy-bird.png",
+        "thumbnail": "/project-images/flappy-bird.png",
         "category": "Game"
     }
 ]
@@ -204,8 +204,17 @@ def get_projects():
             
     for p in projects:
         p["images"] = images_dict.get(p["id"], [])
-        p["thumbnail"] = p["cover_image_url"] if p["cover_image_url"] else "/profile-image.webp"
         
+        # Intercept and convert Supabase CDN URLs to local physical Docker image paths
+        url = p.get("cover_image_url") or ""
+        if "supabase.co" in url:
+            filename = url.split("/")[-1]
+            local_path = f"/project-images/{filename}"
+            p["cover_image_url"] = local_path
+            p["thumbnail"] = local_path
+        else:
+            p["thumbnail"] = url if url else "/profile-image.webp"
+            
     return jsonify(projects)
 
 @app.route("/api/github", methods=["GET"])
