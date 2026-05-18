@@ -141,7 +141,17 @@ def get_projects():
 @app.route("/api/projectcard/<slug>", methods=["GET"])
 def get_project_card(slug):
     projects = fetch_all_projects()
-    project = next((p for p in projects if p.get("slug") == slug), None)
+    clean_slug = slug.strip().rstrip('/')
+    if clean_slug.startswith("projectcard"):
+        digit_part = "".join(filter(str.isdigit, clean_slug))
+        if digit_part:
+            try:
+                idx = int(digit_part) - 1
+                if 0 <= idx < len(projects):
+                    return jsonify(projects[idx])
+            except ValueError:
+                pass
+    project = next((p for p in projects if p.get("slug") == clean_slug), None)
     if not project:
         return jsonify({"error": "Project not found"}), 404
     return jsonify(project)
