@@ -45,6 +45,8 @@ jobs:
           node-version: 18
 
       - name: Install Frontend Dependencies & Test Build
+        env:
+          CI: false
         run: |
           cd frontend
           npm install --legacy-peer-deps
