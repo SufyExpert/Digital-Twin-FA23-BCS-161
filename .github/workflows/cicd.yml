@@ -110,9 +110,7 @@ jobs:
       - name: Deploy Database and Services to AKS
         run: |
           mkdir -p ~/.kube
-          cat << 'EOF' > ~/.kube/config
-          ${{ secrets.KUBECONFIG }}
-          EOF
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
           kubectl apply -f k8s/postgres-deployment.yaml
           kubectl apply -f k8s/postgres-service.yaml
           kubectl apply -f k8s/backend-service.yaml
