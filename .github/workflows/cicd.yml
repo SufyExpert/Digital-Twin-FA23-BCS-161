@@ -111,6 +111,7 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
+          kubectl config use-context FA23-BCS-161-Clust
           kubectl apply -f k8s/postgres-deployment.yaml
           kubectl apply -f k8s/postgres-service.yaml
           kubectl apply -f k8s/backend-service.yaml
