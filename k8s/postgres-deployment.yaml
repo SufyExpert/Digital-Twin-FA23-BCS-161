@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: sufyexpert/fa23-bcs-161-database:latest
+          image: sufyexpert/fa23-bcs-161-database:FA23-BCS-161
           imagePullPolicy: Always
           ports:
             - containerPort: 5432

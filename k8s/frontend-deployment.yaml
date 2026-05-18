@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: sufyexpert/fa23-bcs-161-frontend
+          image: sufyexpert/fa23-bcs-161-frontend:FA23-BCS-161
           imagePullPolicy: Always
           ports:
             - containerPort: 80
