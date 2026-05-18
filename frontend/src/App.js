@@ -3,24 +3,6 @@ import './index.css';
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
 
-/* ── Screenshot asset paths ─────────────────────── */
-const SCREENSHOTS = [
-  { src: '/screenshots/1_Docker_Images_Built.png', caption: '1 · Docker Images Built' },
-  { src: '/screenshots/2_Containers_Running.png', caption: '2 · Containers Running' },
-  { src: '/screenshots/1_Git_Commits_History.png', caption: '3 · Git Commit History' },
-  { src: '/screenshots/2_Code_Pushed.png', caption: '4 · Code Pushed to GitHub' },
-  { src: '/screenshots/1_Images_Pushed.png', caption: '5 · Images Pushed to DockerHub' },
-  { src: '/screenshots/1_Deployment_YAML_Applied.png', caption: '6 · K8s Deployment Applied' },
-  { src: '/screenshots/2_Pods_Running.png', caption: '7 · Pods Running on AKS' },
-  { src: '/screenshots/3_External_IP_Visible.png', caption: '8 · External IP Exposed' },
-  { src: '/screenshots/4_Scaled_To_3.png', caption: '9 · Scaled to 3 Replicas' },
-  { src: '/screenshots/1_Resource_Group_Created.png', caption: '10 · Azure Resource Group' },
-  { src: '/screenshots/2_AKS_Cluster_Created.png', caption: '11 · AKS Cluster Created' },
-  { src: '/screenshots/1_Wrong_Port_Error.png', caption: '12 · Troubleshooting: Port Error' },
-  { src: '/screenshots/2_Port_Fixed.png', caption: '13 · Troubleshooting: Port Fixed' },
-  { src: '/screenshots/1_React_UI_Working.png', caption: '14 · React UI Working' },
-  { src: '/screenshots/1b_Dashboard_Repos.png', caption: '15 · Dashboard with Repos' },
-];
 
 const INIT_MSG = {
   id: 1, role: 'ai',
@@ -147,8 +129,8 @@ function ChatView({ onDashboard }) {
   return (
     <div className="chat-view">
       <div className="chat-hero">
-        <div className="hero-avatar" style={{ animation: 'float 5s ease-in-out infinite' }}>
-          <HeroIcon />
+        <div className="hero-avatar" style={{ animation: 'float 5s ease-in-out infinite', overflow: 'hidden', border: '3px solid var(--violet)' }}>
+          <img src="/profile-image.webp" alt="Sufyan Ahmad" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         </div>
         <div className="hero-title">
           Hey. I'm Sufyan Ahmad <span>Digital Twin.</span>
@@ -199,25 +181,33 @@ function ChatView({ onDashboard }) {
 
 /* ── Dashboard View ─────────────────────────────── */
 function DashboardView() {
-  const [repos, setRepos] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [load, setLoad] = useState(true);
   const [err, setErr] = useState(false);
 
   useEffect(() => {
-    fetch(`${API}/api/github`)
+    fetch(`${API}/api/projects`)
       .then(r => r.json())
-      .then(d => { setRepos(d); setLoad(false); })
+      .then(d => { setProjects(d); setLoad(false); })
       .catch(() => { setErr(true); setLoad(false); });
   }, []);
 
-  const totalStars = repos.reduce((a, r) => a + (r.stargazers_count || 0), 0);
-
   const stats = [
-    { cls: 's0', icon: <RepoIcon />, val: load ? '–' : repos.length, lbl: 'GitHub Repos' },
+    { cls: 's0', icon: <RepoIcon />, val: load ? '–' : projects.length, lbl: 'Academic Projects' },
     { cls: 's1', icon: <CloudIcon />, val: '3+', lbl: 'Cloud Platforms' },
     { cls: 's2', icon: <DockerIcon />, val: '5+', lbl: 'Docker Images' },
-    { cls: 's3', icon: <StarIcon />, val: load ? '–' : totalStars, lbl: 'Total Stars' },
+    { cls: 's3', icon: <StarIcon />, val: 'Active', lbl: 'Postgres Seeded' },
   ];
+
+  const parseTech = (techStr) => {
+    try {
+      if (!techStr) return [];
+      let clean = techStr.replace(/'/g, '"');
+      return JSON.parse(clean);
+    } catch {
+      return [];
+    }
+  };
 
   return (
     <div className="dashboard-view">
@@ -225,9 +215,11 @@ function DashboardView() {
       {/* Profile Banner */}
       <div className="profile-banner">
         <div className="watermark">FA23-BCS-161</div>
-        <div className="profile-pic"><UserPicIcon /></div>
+        <div className="profile-pic">
+          <img src="/profile-image.webp" alt="Sufyan Ahmad" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+        </div>
         <div className="profile-info">
-          <div className="profile-name">Sufyan</div>
+          <div className="profile-name">Sufyan Ahmad</div>
           <div className="profile-reg">REG# FA23-BCS-161</div>
           <div className="profile-role">Cloud & DevOps Engineer · GitHub: <strong>SufyExpert</strong></div>
           <div className="tags">
@@ -252,62 +244,59 @@ function DashboardView() {
         ))}
       </div>
 
-      {/* Live Repos */}
+      {/* Projects Grid */}
       <div>
         <div className="section-head">
-          Live GitHub Repositories
-          <span className="section-badge">LIVE</span>
+          DevOps & Cloud-Native Digital Twin Projects
+          <span className="section-badge">SEEDED TIER</span>
         </div>
-        <div className="repos-grid">
+        <div className="projects-grid">
           {load && (
             <div className="center-msg">
               <div className="spinner" />
-              Fetching repositories from GitHub…
+              Loading projects from PostgreSQL Database Tier…
             </div>
           )}
           {!load && err && (
-            <div className="center-msg">Could not load repositories. Check backend connection.</div>
+            <div className="center-msg">Could not load projects. Check backend connection.</div>
           )}
-          {!load && !err && repos.length === 0 && (
-            <div className="center-msg">No public repositories found for SufyExpert.</div>
+          {!load && !err && projects.length === 0 && (
+            <div className="center-msg">No projects found in database tier.</div>
           )}
-          {!load && !err && repos.map(r => (
-            <div key={r.name} className="repo-card"
-              onClick={() => window.open(r.html_url, '_blank')}>
-              <div className="repo-header">
-                <div className="repo-icon"><RepoIcon /></div>
-                <div className="repo-name">{r.name}</div>
+          {!load && !err && projects.map(p => (
+            <div key={p.id} className="project-card">
+              <div className="project-img-wrapper">
+                <img
+                  src={p.thumbnail}
+                  alt={p.title}
+                  className="project-img"
+                  loading="lazy"
+                  onError={e => { e.target.src = '/profile-image.webp'; }}
+                />
+                <span className="project-category">{p.category || 'System'}</span>
               </div>
-              <div className="repo-desc">{r.description}</div>
-              <div className="repo-footer">
-                <div className="stars"><StarIcon /> {r.stargazers_count}</div>
-                <a href={r.html_url} target="_blank" rel="noreferrer"
-                  className="repo-btn" onClick={e => e.stopPropagation()}>
-                  View →
-                </a>
+              <div className="project-info-body">
+                <div className="project-card-title">{p.title}</div>
+                <div className="project-card-desc">{p.description}</div>
+                
+                <div className="project-tech">
+                  {parseTech(p.technologies).map(t => (
+                    <span key={t} className="tech-badge">{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Lab Documentation Screenshots */}
-      <div className="gallery-section">
-        <div className="section-head">
-          Lab Documentation
-          <span className="section-badge">FA23-BCS-161</span>
-        </div>
-        <div className="gallery-grid">
-          {SCREENSHOTS.map((s, i) => (
-            <div key={i} className="gallery-card">
-              <img
-                src={s.src}
-                alt={s.caption}
-                className="gallery-img"
-                loading="lazy"
-                onError={e => { e.target.style.display = 'none'; }}
-              />
-              <div className="gallery-caption">{s.caption}</div>
+              <div className="project-card-footer">
+                {p.github_link && (
+                  <a href={p.github_link} target="_blank" rel="noreferrer" className="proj-btn github">
+                    <GHIcon /> Code
+                  </a>
+                )}
+                {p.link && (
+                  <a href={p.link} target="_blank" rel="noreferrer" className="proj-btn live">
+                    Launch →
+                  </a>
+                )}
+              </div>
             </div>
           ))}
         </div>

@@ -93,13 +93,11 @@ def get_services():
 
 @app.route("/api/projects", methods=["GET"])
 def get_projects():
-    # Join projects with project_images
-    projects = query_db("SELECT id, name, description, html_url, stargazers_count FROM projects ORDER BY id ASC;")
+    projects = query_db("SELECT id, title, slug, description, cover_image_url, link, github_link, technologies, tools, case_study_content, status, is_featured, order_index, category FROM projects ORDER BY order_index ASC;")
     if projects is None:
-        # Fallback to GitHub API if DB fails
-        return github_repos()
+        return jsonify([])
         
-    images = query_db("SELECT project_id, image_url, caption FROM project_images ORDER BY id ASC;")
+    images = query_db("SELECT project_id, url, order_index FROM project_images ORDER BY order_index ASC;")
     images_dict = {}
     if images:
         for img in images:
@@ -110,8 +108,7 @@ def get_projects():
             
     for p in projects:
         p["images"] = images_dict.get(p["id"], [])
-        # Assign first image_url as thumbnail
-        p["thumbnail"] = p["images"][0]["image_url"] if p["images"] else "/screenshots/1_Docker_Images_Built.png"
+        p["thumbnail"] = p["cover_image_url"] if p["cover_image_url"] else "/profile-image.webp"
         
     return jsonify(projects)
 
@@ -142,7 +139,7 @@ def fetch_github_repos():
 @app.route("/api/github", methods=["GET"])
 def github_repos():
     # First try from our database
-    projects = query_db("SELECT name, description, html_url, stargazers_count FROM projects ORDER BY id ASC;")
+    projects = query_db("SELECT title as name, description, github_link as html_url, 0 as stargazers_count FROM projects ORDER BY order_index ASC;")
     if projects:
         return jsonify(projects)
     # Fallback to live API if DB fails
@@ -166,10 +163,10 @@ def chat():
         )
     elif any(k in message for k in ["project", "repo", "github", "work", "portfolio"]):
         # Try fetching from DB
-        projects = query_db("SELECT name, stargazers_count FROM projects LIMIT 8;")
+        projects = query_db("SELECT title as name FROM projects LIMIT 8;")
         if projects:
             repo_list = "\n".join(
-                [f"• {r['name']} — ⭐ {r['stargazers_count']}" for r in projects]
+                [f"• {r['name']}" for r in projects]
             )
             reply = f"Here are Sufyan's projects fetched directly from our PostgreSQL Database Tier:\n{repo_list}\n\nVisit github.com/SufyExpert for more!"
         else:
