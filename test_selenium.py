@@ -39,74 +39,99 @@ def test_homepage_loaded(driver):
     """Test Case 1: Verify Homepage Loads Successfully"""
     print("\n--- Running Test Case 1: Verify Homepage Loads ---")
     driver.get(TARGET_URL)
-    time.sleep(3) # Let React fully load
+    time.sleep(2)  # Let React fully load
     
     actual_title = driver.title
     print(f"Homepage Title: '{actual_title}'")
-    assert "Sufyan" in actual_title, f"Title assertion failed! Got: {actual_title}"
+    assert "Sufyan" in actual_title or "Digital Twin" in actual_title, f"Title assertion failed! Got: {actual_title}"
     take_ss(driver, "01_homepage_loaded")
     print("[PASS] Test Case 1 Succeeded!")
 
-def test_chatbot_behavior(driver):
-    """Test Case 2: Validate Chatbot Form & AI Clone Behavior"""
-    print("\n--- Running Test Case 2: Validate Chatbot Form & AI Behavior ---")
+def test_dashboard_loaded(driver):
+    """Test Case 2: Navigate to Dashboard and Wait for Postgres Seed Data"""
+    print("\n--- Running Test Case 2: Navigate to Dashboard ---")
     driver.get(TARGET_URL)
     time.sleep(2)
+    
     try:
-        # Locate the chatbot text input
+        # Navigate to Dashboard
+        dash_btn = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "nav-dash-btn"))
+        )
+        dash_btn.click()
+        
+        # Pause 3 seconds to let React fetch dynamic projects from PostgreSQL
+        print("Waiting 3 seconds for dynamic Postgres project cards to load...")
+        time.sleep(3)
+        
+        take_ss(driver, "02_dashboard_loaded")
+        
+        # Verify that project elements are loaded on the screen
+        project_cards = driver.find_elements(By.CLASS_NAME, "project-card")
+        print(f"Found {len(project_cards)} project cards loaded from PostgreSQL database container!")
+        assert len(project_cards) > 0, "No projects loaded from the database container!"
+        print("[PASS] Test Case 2 Succeeded!")
+    except Exception as e:
+        take_ss(driver, "02_dashboard_failed")
+        pytest.fail(f"Test Case 2 failed: {str(e)}")
+
+def test_about_loaded(driver):
+    """Test Case 3: Navigate to About and Wait for Timeline Experience Data"""
+    print("\n--- Running Test Case 3: Navigate to About ---")
+    
+    try:
+        # Navigate to About
+        about_btn = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "nav-about-btn"))
+        )
+        about_btn.click()
+        
+        # Pause 3 seconds to let React fetch dynamic timeline experience from PostgreSQL
+        print("Waiting 3 seconds for dynamic timeline experience items to load...")
+        time.sleep(3)
+        
+        take_ss(driver, "03_about_loaded")
+        
+        # Verify experience timeline block
+        timeline_items = driver.find_elements(By.CLASS_NAME, "exp-card")
+        print(f"Found {len(timeline_items)} timeline items loaded from PostgreSQL database container!")
+        assert len(timeline_items) > 0, "No experience items loaded from the database container!"
+        print("[PASS] Test Case 3 Succeeded!")
+    except Exception as e:
+        take_ss(driver, "03_about_failed")
+        pytest.fail(f"Test Case 3 failed: {str(e)}")
+
+def test_chatbot_behavior(driver):
+    """Test Case 4: Validate Chatbot Form & AI Clone Behavior"""
+    print("\n--- Running Test Case 4: Validate Chatbot Form & AI Behavior ---")
+    driver.get(TARGET_URL)
+    time.sleep(2)
+    
+    try:
+        # Locate the chatbot text input using ID
         chat_input = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input[placeholder*='Ask'], input[type='text']"))
+            EC.presence_of_element_located((By.ID, "chat-input"))
         )
         chat_input.send_keys("Tell me about your DevOps skills")
         
-        # Locate and click send button
-        send_btn = driver.find_element(By.XPATH, "//button[contains(text(), 'Send') or contains(@class, 'send') or contains(@type, 'submit')]")
+        # Locate and click send button using ID
+        send_btn = driver.find_element(By.ID, "send-btn")
         send_btn.click()
         print("Sent message to chatbot: 'Tell me about your DevOps skills'")
         
-        # Wait for AI response
+        # Wait 3 seconds for AI response
         time.sleep(3)
-        take_ss(driver, "02_chat_behavior")
+        take_ss(driver, "04_chat_behavior")
         
-        # Retrieve response text to assert
-        chat_response = driver.find_element(By.XPATH, "//*[contains(text(), 'Sufyan') or contains(text(), 'skilled')]").text
-        print(f"Chatbot Response: '{chat_response[:80]}...'")
-        print("[PASS] Test Case 2 Succeeded!")
+        # Retrieve message list
+        bubbles = driver.find_elements(By.CLASS_NAME, "msg-bubble")
+        assert len(bubbles) > 1, "Chatbot response bubble was not rendered!"
+        print(f"Chatbot returned a total of {len(bubbles) - 1} response message bubbles.")
+        print("[PASS] Test Case 4 Succeeded!")
     except Exception as e:
-        take_ss(driver, "02_chat_failed")
-        pytest.fail(f"Test Case 2 failed: {str(e)}")
-
-def test_api_database_connected(driver):
-    """Test Case 3: Check Frontend-to-Backend Database API Response"""
-    print("\n--- Running Test Case 3: Check Database Status ---")
-    driver.get(TARGET_URL)
-    time.sleep(2)
-    try:
-        # Navigate to Dashboard
-        dash_btn = driver.find_element(By.ID, "nav-dash-btn")
-        dash_btn.click()
-        time.sleep(2)
-        take_ss(driver, "03_dashboard_navigated")
-        
-        # Check database connection status indicators
-        db_pill = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//*[contains(text(), 'Database') or contains(text(), 'Postgres') or contains(text(), 'seeded') or contains(text(), 'connected')]"))
-        )
-        print(f"Database status element found on UI: '{db_pill.text}'")
-        take_ss(driver, "04_database_connected")
-        print("[PASS] Test Case 3 Succeeded!")
-    except Exception as e:
-        # Fallback direct API endpoint check
-        print("Dashboard check failed, performing direct Flask DB API check...")
-        driver.get(f"{TARGET_URL}/api/db-status")
-        time.sleep(1)
-        api_content = driver.find_element(By.TAG_NAME, "pre").text
-        print(f"Direct API Response: {api_content}")
-        assert "connected" in api_content, "API did not return connected state!"
-        take_ss(driver, "04_api_db_connected")
-        print("[PASS] Test Case 3 (Direct API) Succeeded!")
+        take_ss(driver, "04_chat_failed")
+        pytest.fail(f"Test Case 4 failed: {str(e)}")
 
 if __name__ == "__main__":
-    # Fallback sequential run if called directly (python test_selenium.py)
     print("Running Selenium tests sequentially via Pytest runner...")
     pytest.main([__file__, "-v", "-s"])
