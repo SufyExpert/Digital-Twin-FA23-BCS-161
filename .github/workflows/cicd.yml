@@ -76,7 +76,7 @@ jobs:
           context: ./db
           push: true
           tags: |
-            sufyexpert/fa23-bcs-161-database:latest
+            sufyexpert/fa23-bcs-161-database:FA23-BCS-161
             sufyexpert/fa23-bcs-161-database:${{ github.sha }}
 
       # 2. Build and Push Backend Image
@@ -86,7 +86,7 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            sufyexpert/fa23-bcs-161-backend:latest
+            sufyexpert/fa23-bcs-161-backend:FA23-BCS-161
             sufyexpert/fa23-bcs-161-backend:${{ github.sha }}
 
       # 3. Build and Push Frontend Image
@@ -96,7 +96,7 @@ jobs:
           context: ./frontend
           push: true
           tags: |
-            sufyexpert/fa23-bcs-161-frontend:latest
+            sufyexpert/fa23-bcs-161-frontend:FA23-BCS-161
             sufyexpert/fa23-bcs-161-frontend:${{ github.sha }}
 
   deploy-to-aks:
