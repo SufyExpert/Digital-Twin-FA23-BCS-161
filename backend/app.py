@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import psycopg2
 import os
-import json
 
 app = Flask(__name__)
 CORS(app)
@@ -41,99 +40,6 @@ def normalize_image(url):
     """Return the original url as-is, per user preference to load directly from remote CDN."""
     return url if url else "/profile-image.webp"
 
-# ─── Fallback data from real database seed schema ─────────────────────────────
-FALLBACK_EXPERIENCE = [
-    {
-        "role": "BS Computer Science",
-        "company": "COMSATS University Islamabad, Lahore Campus",
-        "duration": "2023 – Present",
-        "description": "['Currently in 6th semester with a CGPA of 3.73', 'Focusing on Artificial Intelligence, Machine Learning & Data Science', 'Building end-to-end AI systems from Bayesian engines to full-stack ML apps', 'Actively seeking AI/ML internship opportunities']"
-    },
-    {
-        "role": "AI Engineering Enthusiast",
-        "company": "Independent Research & Development",
-        "duration": "2023 – Present",
-        "description": "['Developed a Medical Diagnostic System using Random Forest and Neo4j knowledge graphs', 'Built ASK Academy ERP system with Azure SQL and custom triggers', 'Engineered mutual-friend recommendation algorithms using MongoDB', 'Unifying multiple data streams into a single interface with Flutter']"
-    }
-]
-
-FALLBACK_SERVICES = [
-    {
-        "title": "AI Engineering",
-        "description": "Building complete, working systems—from Bayesian-inference diagnostic engines to multi-model Random Forest evaluation pipelines.",
-        "icon": "StarIcon"
-    },
-    {
-        "title": "Full-Stack AI Development",
-        "description": "Bridging ML model development with real deployable software using Next.js, Flask, and modern database architectures.",
-        "icon": "CloudIcon"
-    },
-    {
-        "title": "Database Architecting",
-        "description": "Designing scalable data solutions using Neo4j, MongoDB, and Azure SQL with a focus on data integrity and performance.",
-        "icon": "DockerIcon"
-    }
-]
-
-FALLBACK_PROJECTS = [
-    {"id": "88888888-8888-8888-8888-888888888888", "title": "Prompt Tutor AI", "slug": "prompt-tutor-ai",
-     "description": "An AI-powered web application that helps users write, analyze, improve, and compare prompts.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/prompt-tutor-ai.png", "link": "https://promptutor.app",
-     "github_link": "https://github.com/SufyExpert/prompt-tutor-ai",
-     "technologies": "['Next.js', 'AI Studio', 'Supabase', 'Tailwind CSS', 'Vercel']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/prompt-tutor-ai.png", "category": "SaaS Web App", "order_index": 1,
-     "case_study_content": "Prompt Tutor AI is a fully deployed SaaS application using Google AI Studio to analyze and improve user prompts. Built with Next.js and Supabase, it features a real-time prompt comparison engine, difficulty scoring, and a structured prompt template library."},
-    {"id": "11111111-1111-1111-1111-111111111111", "title": "Health Level Prediction System", "slug": "health-predictor",
-     "description": "Stateless diagnostic ML system predicting health risk tier using Random Forest.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/health-risk.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/health-level-prediction-system",
-     "technologies": "['Python', 'Flask', 'Scikit-Learn', 'Matplotlib', 'Random Forest']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/health-risk.png", "category": "Web App", "order_index": 2,
-     "case_study_content": "A Flask web application that takes patient vitals as inputs and predicts health risk level using a trained Random Forest classifier. Features interactive visualizations built with Matplotlib and a clean form-based interface."},
-    {"id": "22222222-2222-2222-2222-222222222222", "title": "Medical Diagnostic System V2", "slug": "medical-diagnostic-v2",
-     "description": "SaaS clinical symptom checker using dual ML engines (Random Forest + Bayesian) and Neo4j graph.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v2.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/medical-diagnostic-system-ver2",
-     "technologies": "['Next.js', 'React', 'Node.js', 'Python ML', 'Express', 'Microservices']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v2.png", "category": "Web App", "order_index": 3,
-     "case_study_content": "Version 2 rebuilt as a full microservices SaaS platform. Dual ML inference engines (Random Forest + Bayesian Networks) served via separate Python microservices behind a Node.js API gateway, with a modern Next.js frontend."},
-    {"id": "33333333-3333-3333-3333-333333333333", "title": "ASK Academy ERP", "slug": "ask-academy",
-     "description": "Enterprise-grade school management ERP powered by PostgreSQL with LLM & RAG support.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/ask-academy.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/ask_academy",
-     "technologies": "['Python', 'React', 'PostgreSQL', 'Vector DB', 'LLM', 'RAG']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/ask-academy.png", "category": "Web App", "order_index": 4,
-     "case_study_content": "A full enterprise ERP for school management with AI-powered search using RAG and Vector DB. Features student management, fee tracking, attendance, and an LLM-powered virtual assistant for staff queries."},
-    {"id": "55555555-5555-5555-5555-555555555555", "title": "Vibee Social Aggregator", "slug": "vibee",
-     "description": "Cross-platform Flutter app centralizing YouTube, Reddit, and News with digital well-being features.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/vibee.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/vibee-centralized-social-media",
-     "technologies": "['Flutter', 'Dart', 'WebSockets', 'NoSQL', 'Firebase', 'Real-time']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/vibee.png", "category": "Mobile App", "order_index": 5,
-     "case_study_content": "Vibee aggregates YouTube, Reddit, and News feeds in a single unified interface. Features real-time WebSocket updates, Firebase authentication, timed usage sessions for digital wellbeing, and offline-first NoSQL caching."},
-    {"id": "66666666-6666-6666-6666-666666666666", "title": "Medical Diagnostic System V1", "slug": "medical-diagnostic-v1",
-     "description": "Standalone offline-first Bayesian probability desktop triage app with Neo4j knowledge graph.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v1.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/medical-diagnostic-system",
-     "technologies": "['Python', 'Bayesian Network', 'Neo4j', 'FastAPI', 'Scikit-Learn']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/meddiag-v1.png", "category": "Desktop App", "order_index": 6,
-     "case_study_content": "The original standalone medical diagnostic tool using Bayesian Network probability to triage symptoms against a Neo4j graph knowledge base. Features offline-first architecture and FastAPI local serving."},
-    {"id": "44444444-4444-4444-4444-444444444444", "title": "SocialApp Community Web", "slug": "social-app",
-     "description": "MERN-stack community hub with friend graphs and Base64 media serialization.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/socialapp.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/socialapp",
-     "technologies": "['MongoDB', 'Express', 'React', 'Node.js', 'JWT', 'Bcrypt']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/socialapp.png", "category": "Web App", "order_index": 7,
-     "case_study_content": "A MERN-stack social community platform with friend request graphs, post feeds, and user authentication. Media files serialized as Base64 and stored in MongoDB. JWT auth and Bcrypt password hashing."},
-    {"id": "77777777-7777-7777-7777-777777777777", "title": "Flappy Bird Engine", "slug": "flappy-bird",
-     "description": "Desktop Java game with custom multi-threaded game loops and raw collision physics.",
-     "cover_image_url": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/flappy-bird.png", "link": "",
-     "github_link": "https://github.com/SufyExpert/Flappy-Bird-Game",
-     "technologies": "['Java', 'AWT', 'Swing', 'OOP', 'Game Loop', 'Physics']",
-     "thumbnail": "https://ywhocytfjiubouhehiuj.supabase.co/storage/v1/object/public/project-images/flappy-bird.png", "category": "Game", "order_index": 8,
-     "case_study_content": "A fully functional Flappy Bird clone in pure Java using AWT and Swing. Custom multi-threaded game loop with delta-time physics, raw AABB collision detection, high-score persistence, and clean OOP architecture."}
-]
-
 # ─── Shared helper ────────────────────────────────────────────────────────────
 def fetch_all_projects():
     projects = query_db(
@@ -142,7 +48,7 @@ def fetch_all_projects():
         "FROM projects ORDER BY order_index ASC;"
     )
     if not projects:
-        return FALLBACK_PROJECTS
+        return []
 
     images = query_db("SELECT project_id, url, order_index FROM project_images ORDER BY order_index ASC;")
     images_dict = {}
@@ -157,10 +63,6 @@ def fetch_all_projects():
         p["images"] = images_dict.get(p["id"], [])
         p["cover_image_url"] = normalize_image(p.get("cover_image_url"))
         p["thumbnail"] = p["cover_image_url"]
-        if not p.get("case_study_content"):
-            fb = next((f for f in FALLBACK_PROJECTS if f["slug"] == p.get("slug")), None)
-            if fb:
-                p["case_study_content"] = fb["case_study_content"]
 
     return projects
 
@@ -185,7 +87,7 @@ def dashboard():
             "total_projects": len(projects),
             "cloud_platforms": 3,
             "docker_images": 5,
-            "db_status": "seeded"
+            "db_status": "seeded" if projects else "offline"
         }
     })
 
@@ -201,8 +103,6 @@ def about():
                 "duration": item["date_range"],
                 "description": item["bullets"]
             })
-    else:
-        experience = FALLBACK_EXPERIENCE
 
     db_svc = query_db("SELECT title, slug, tagline, description, features FROM services ORDER BY order_index ASC;")
     services = []
@@ -220,8 +120,6 @@ def about():
                 "description": item["description"],
                 "icon": icon
             })
-    else:
-        services = FALLBACK_SERVICES
 
     return jsonify({
         "name": "Sufyan Ahmad",
@@ -252,7 +150,7 @@ def get_project_card(slug):
 def get_experience():
     db_exp = query_db("SELECT title, company, date_range, bullets FROM experience ORDER BY order_index ASC;")
     if not db_exp:
-        return jsonify(FALLBACK_EXPERIENCE)
+        return jsonify([])
     experience = []
     for item in db_exp:
         experience.append({
@@ -267,7 +165,7 @@ def get_experience():
 def get_services():
     db_svc = query_db("SELECT title, slug, tagline, description, features FROM services ORDER BY order_index ASC;")
     if not db_svc:
-        return jsonify(FALLBACK_SERVICES)
+        return jsonify([])
     services = []
     for item in db_svc:
         icon = "StarIcon"
@@ -287,7 +185,7 @@ def get_services():
 @app.route("/api/github", methods=["GET"])
 def github_repos():
     projects = fetch_all_projects()
-    repos = [{"name": p["title"], "description": p["description"],
+    repos = [{"name": p["name"] if "name" in p else p["title"], "description": p["description"],
                "html_url": p.get("github_link", ""), "stargazers_count": 0} for p in projects]
     return jsonify(repos)
 
@@ -363,7 +261,7 @@ def health():
     except Exception:
         pass
     return jsonify({"status": "ok", "database": db_ok, "developer": "Sufyan",
-                    "reg": "FA23-BCS-161", "version": "3.1.0 (3-Tier + Seed Matched + Trained Chatbot)"})
+                    "reg": "FA23-BCS-161", "version": "3.2.0 (Strictly Database Driven)"})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
